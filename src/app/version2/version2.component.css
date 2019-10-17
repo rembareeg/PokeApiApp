@@ -1,0 +1,32 @@
+#main-wrapper{
+    width: 400px;
+    margin: 0 auto;  
+}
+#search-box {
+    width: 100px;
+    margin: 0 auto;
+}
+.blue-fnt {
+    color: blue;
+}
+  
+.cnt-txt {
+    text-align: center;
+}
+  
+.spacer {
+    height: 50px;
+}
+  
+.margt {
+    margin-top: 30px;
+}
+table {
+    width: 100%;
+  }
+.fakebat:hover {
+    cursor: pointer;
+}
+.mat-dialog-container {
+    margin: 0px;padding: 0px;
+}

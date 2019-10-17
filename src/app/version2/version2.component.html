@@ -1,0 +1,37 @@
+<div id="main-wrapper">
+    <h2 class="blue-fnt cnt-txt margt">Version 2</h2>
+    <div class="spacer"></div>
+    <div id="search-box">
+        <form class="example-form" [formGroup]="pokemonForm">
+            <div>
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)"  placeholder="Name" formControlName="name">
+                </mat-form-field>
+            </div>            
+        </form>
+    </div>
+    <div class="spacer"></div>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+          
+                <!-- Position Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name | titlecase }} </td>
+                </ng-container>
+
+                <ng-container  matColumnDef="img">
+                    <th style="text-align: right" mat-header-cell *matHeaderCellDef > Details </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon class="fakebat" style="float: right;" svgIcon="pokeball" aria-hidden="false" (click)="openDialog(element)"></mat-icon> 
+                    </td>
+                </ng-container> 
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSize] = "10" (page)="pageEvent($event)" ></mat-paginator>
+        </div>
+  </div>
+  

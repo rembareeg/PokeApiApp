@@ -1,0 +1,25 @@
+#main-wrapper{
+  width: 800px;
+  margin: 0 auto;
+
+}
+.blue-fnt {
+  color: blue;
+}
+
+.cnt-txt {
+  text-align: center;
+}
+
+.spacer {
+  height: 200px;
+}
+
+.margt {
+  margin-top: 50px;
+}
+
+#button-wrapper {
+  width: 300px;
+  margin: 0 auto;
+}

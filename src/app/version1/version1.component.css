@@ -1,0 +1,32 @@
+#main-wrapper{
+    width: 800px;
+    margin: 0 auto;
+  
+}
+#search-box {
+    width: 600px;
+    margin: 0 auto;
+}
+.blue-fnt {
+    color: blue;
+}
+  
+.cnt-txt {
+    text-align: center;
+}
+  
+.spacer {
+    height: 100px;
+}
+  
+.margt {
+    margin-top: 50px;
+}
+.margl {
+    float: left;
+    margin-left: 30px;
+}
+table {
+    width: 100%;
+  }
+  
