@@ -11,6 +11,7 @@ import {MatIconRegistry} from '@angular/material/icon';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NamedResource } from '../_models/NamedResource';
 import { Poke } from '../_models/Poke';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-version2',
@@ -38,7 +39,7 @@ export class Version2Component implements OnInit {
   // Adding paginator
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private pokemonService: PokemonService, private formBuilder: FormBuilder, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public dialog: MatDialog) { 
+  constructor(private pokemonService: PokemonService, private router: Router, private formBuilder: FormBuilder, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public dialog: MatDialog) { 
     // Init new Icon for poke ball
     iconRegistry.addSvgIcon(
       'pokeball',
@@ -48,51 +49,50 @@ export class Version2Component implements OnInit {
     // Initiate form
     this.initPokemonForm();
     // Get pokemons to list
-    this.getPokemons();    
+    this.getPokemons(this.offset, this.limit);  
+    this.dataSource.paginator = this.paginator;   
   }
-  getPokemons() {    
-    this.pokemonService.getPokemons(this.offset, this.limit).subscribe((newPokemons: PokemonList) => {
+  getPokemons(offset: number, limit : number) {    
+    this.pokemonService.getPokemons(offset, this.limit).subscribe((newPokemons: PokemonList) => {
       this.pokemonList = newPokemons;
+      if(this.pokemons.length == 0)
+      {
+        this.pokemons = new Array<Poke>(this.pokemonList.count);
+      }
       // Getting pokemon objects from names    
-      for(var i = 0; i < newPokemons.results.length; i++)
+      for(let i = 0; i < newPokemons.results.length; i++)
       {
         this.getPokemonByName(newPokemons.results[i].name);
       }  
       // Calculating new offset
-      this.offset += this.limit;      
-    });
-  }
-  
+      this.offset += this.limit;    
+      if(this.pokemons.length < this.pokemonList.count)
+      {
+        this.getPokemons(this.offset, length);
+      } 
+    });    
+  } 
   // Getting pokemons by name and adding to array 
   getPokemonByName(name: string) : void
-  {
+  {    
     this.pokemonService.getPokemon(name).subscribe((newPokemon: Pokemon) => {
       // If success add pokemon to array
-      var instance : Poke = new Poke(newPokemon);
-      this.pokemons.push(instance);      
+      let instance : Poke = new Poke(newPokemon);
+      this.pokemons[instance.id - 1] = instance;   
+      // Set new dataset
+      this.dataSource.data = this.pokemons;
     }, () => {
       // If error reset pokemon array
       this.pokemons = [];      
-    }, ()=>{
-      // On end 
       // Set new dataset
-      this.dataSource = new MatTableDataSource<Poke>(this.pokemons);
-      this.dataSource.paginator = this.paginator; 
-    });    
+      this.dataSource.data = this.pokemons;  
+
+    });
   }
 
   // Applaying search filter
-  applyFilter(filterValue: string) {
-    // If input is not null or empty search for pokemons
-    if(filterValue != null && filterValue != ''){
-      this.getPokemonByName(filterValue.trim().toLowerCase());
-    }
-    // If its empty get list of pokemons
-    else
-    {
-      this.offset = 0;
-      this.getPokemons();
-    }    
+  applyFilter(filterValue: string) {   
+    this.dataSource.filter = filterValue.trim().toLowerCase();      
   }
   // Adding instace of FormBuilder for form
   initPokemonForm(){
@@ -109,14 +109,17 @@ export class Version2Component implements OnInit {
     });
   }
   // On click of next page
-  pageEvent(event){
-    // If there is 10 or less items or next page, get more pokemons
-    if((event.length / this.pageSize) - 1 <= event.pageIndex)
-    {
-      this.getPokemons();    
+  pageEvent(event){    
+    if((event.pageIndex + 1) * event.pageSize == this.offset)
+    { 
+      this.getPokemons(this.offset, this.limit);
     }
+  }  
+
+  back()
+  {
+    this.router.navigate(['/home']);
   }
-  
 }
 
 @Component({
@@ -154,8 +157,7 @@ export class DialogOverviewExampleDialog {
         this.halfDamageFrom = this.setRelations(newTypes.damage_relations.half_damage_from, this.halfDamageFrom);
         this.noDamageFrom = this.setRelations(newTypes.damage_relations.no_damage_from, this.noDamageFrom);
         this.noDamageTo =this.setRelations(newTypes.damage_relations.no_damage_to, this.noDamageTo); 
-        console.log(this.doubleDamageTo);       
-      });
+        });
     }
     
   }

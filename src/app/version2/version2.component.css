@@ -30,3 +30,7 @@ table {
 .mat-dialog-container {
     margin: 0px;padding: 0px;
 }
+.back-button{
+    float: left;
+}
+  

@@ -1,3 +1,6 @@
+<div class="back-button">
+    <button mat-raised-button (click)="back()" style="background-color: blue; color: white;">Nazad</button>
+</div>
 <div id="main-wrapper">
     <h2 class="blue-fnt cnt-txt margt">Version 1</h2>
     <div class="spacer"></div>
@@ -26,27 +29,27 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name | titlecase}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element?.name | titlecase}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef> Type </th>
-                    <td mat-cell *matCellDef="let element"> {{element.pokemon_types}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element?.pokemon_types}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="h/w">
                     <th mat-header-cell *matHeaderCellDef> Height / Weight </th>
-                    <td mat-cell *matCellDef="let element"> {{element.height}} / {{element.weight}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element?.height}} / {{element?.weight}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="sb">
                     <th mat-header-cell *matHeaderCellDef> Signature abilities </th>
-                    <td mat-cell *matCellDef="let element"> {{element.pokemon_abilities}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element?.pokemon_abilities}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="be">
                     <th mat-header-cell *matHeaderCellDef> Base Experience </th>
-                    <td mat-cell *matCellDef="let element"> {{element.base_experience}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element?.base_experience}} </td>
                 </ng-container>               
           
               
@@ -54,7 +57,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           
-            <mat-paginator [pageSize] = "pageSize" (page)="pageEvent($event)" ></mat-paginator>
+            <mat-paginator [pageSize] = "10" (page)="pageEvent($event)"></mat-paginator>
         </div>
   </div>
   

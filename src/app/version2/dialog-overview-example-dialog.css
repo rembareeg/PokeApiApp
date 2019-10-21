@@ -7,39 +7,13 @@
 #toolbar h2 {
     margin: 0px;
 }
-
-#bigbox {
-    margin-top: 15px;
-    height: inherit;
-    overflow:auto; 
-}
-.infobox {
-    float: left;
-    display: inline-block;
-    text-align: center;
-}
-#rightbox {
-    display: inline-block;
-    float: left;
-    margin-right: 10px;
-}
-#leftbox {
-    display: inline-block;
-    float: left;
-    margin-left: 10px;
-}
-.sborder{
-    border-style: solid;
-}
-.databox{
-    margin-left: 10px;
-    display: inline-block;
-    float: left;
-    text-align: center;
-}
 #bat {
     margin: 50px 15px 15px 0px;
     background-color: blue;
     color: white;
     float: right;
+}
+.no-gutter > [class*='col'] {
+    padding-right:0;
+    padding-left:0;
 }
